@@ -1,0 +1,47 @@
+{
+  "name": "ngx-model2form",
+  "version": "0.0.1",
+  "description": "An RxJS operator to map an model entity to its equivalent Ng (>=2) FormGroup.",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "info": "npm-scripts-info",
+    "build": "tsc -p ./src --outDir ./dist",
+    "prepublishOnly": "npm-run-all build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "scripts-info": {
+    "info": "List available script"
+  },
+  "engines": {
+    "node": ">=6.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Opinya/ngx-model2form.git"
+  },
+  "keywords": [
+    "Angular",
+    "RxJS",
+    "Observable",
+    "Operator",
+    "NgRx",
+    "Reactive-forms"
+  ],
+  "author": "Chen Eshchar <chen@opinya.co.il>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Opinya/ngx-model2form/issues"
+  },
+  "homepage": "https://github.com/Opinya/ngx-model2form#readme",
+  "dependencies": {
+    "@angular/core": "^4.3.1",
+    "@angular/forms": "^4.3.1",
+    "rxjs": "^5.4.2",
+    "typescript": "^2.4.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "npm-scripts-info": "^0.3.6"
+  }
+}
