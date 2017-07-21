@@ -1,20 +1,24 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import 'rxjs/add/operator/map';
 
-export function model2form<T>(
+export function ToNgForm<T>(
     this: Observable<T>, 
-    additionalControls: any, 
-    validators: any
+    additionalControls?: any, 
+    validators?: any
 ): Observable<FormGroup | FormArray | FormControl> {
-  return this.map(model => new FormGroup({
-      someControl: new FormControl(42)
-  }));
+  return this.map(model => new FormGroup(
+      Object.keys(model).reduce((group, prop: string) => {
+        group[prop] = new FormControl(model[prop]);
+        return group;
+      }, {})
+  ));
 }
 
-Observable.prototype.model2form = model2form;
+Observable.prototype.toNgForm = ToNgForm;
 
 declare module 'rxjs/Observable' {
   interface Observable<T> {
-    model2form: typeof model2form;
+    toNgForm: typeof ToNgForm;
   }
 }
