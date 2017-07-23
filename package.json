@@ -1,9 +1,9 @@
 {
   "name": "ngx-model2form",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An RxJS operator to map an model entity to its equivalent Ng (>=2) FormGroup.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "Model2Form.js",
+  "types": "Model2Form.d.ts",
   "scripts": {
     "info": "npm-scripts-info",
     "build": "tsc -p ./src --outDir .",
@@ -42,6 +42,7 @@
     "typescript": "^2.4.2"
   },
   "devDependencies": {
+    "@angular/cli": "^1.2.3",
     "npm-run-all": "^4.0.2",
     "npm-scripts-info": "^0.3.6"
   }
