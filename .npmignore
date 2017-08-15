@@ -1,4 +1,5 @@
 .git
 src
+example
 package-lock.json
 yarn.lock

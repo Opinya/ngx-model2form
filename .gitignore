@@ -7,12 +7,9 @@
 
 # Installed libs
 node_modules/
-example/node_modules/
 
 # Generated
-*.d.ts
-*.js.map
-*.js
+lib
 
 # Misc
 npm-debug.log

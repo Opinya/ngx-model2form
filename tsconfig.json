@@ -10,18 +10,20 @@
     "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
     "target": "es5",
-    "outDir": "..",
+    "rootDir": ".",
+    "outDir": "../lib",
     "lib": [
-      "es5",
-      "es2015.iterable",
-      "es2015.collection",
-      "es2015.promise",
+      "es6", 
+      "es2015.promise", 
+      "es2015.iterable", 
+      "es2015.collection", 
       "dom"
-    ]
-  },
-  "formatCodeOptions": {
-    "indentSize": 2,
-    "tabSize": 2
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "*": [ "node_modules/@types/*", "*"]
+    },
+    "module": "commonjs"
   },
   "files": [
     "Model2Form.ts"

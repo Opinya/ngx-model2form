@@ -1,0 +1,15 @@
+<div [formGroup]="person">
+  <span>Name: </span><input formControlName="name"/>
+  <div formGroupName="address">
+    <span>Address: </span>
+    <input formControlName="houseNumber"/>
+    <input formControlName="streetName"/>
+    <input formControlName="city"/>
+  </div>
+  <div>Children: </div>
+   <ul formArrayName="childrenNames">
+    <li *ngFor="let childName of childrenNames; index as i"> 
+       <input [formControlName]="i"/>   
+    </li> 
+  </ul> 
+</div>
