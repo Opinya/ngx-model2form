@@ -11,7 +11,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "rootDir": ".",
-    "outDir": "../lib",
+    "outDir": "./lib",
     "lib": [
       "es6", 
       "es2015.promise", 
@@ -26,6 +26,6 @@
     "module": "commonjs"
   },
   "files": [
-    "Model2Form.ts"
+    "src/Model2Form.ts"
   ]
 }

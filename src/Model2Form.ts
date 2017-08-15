@@ -3,6 +3,8 @@ import { FormGroup, FormArray, FormControl, ValidatorFn } from '@angular/forms';
 import 'rxjs/add/operator/map';
 
 export type FormEntity = FormGroup | FormArray | FormControl;
+export type Primitive = string | number | boolean;
+export type Entity = Primitive | Object | Object[] | Primitive[];
 
 declare module 'rxjs/Observable' {
     interface Observable<T> {
@@ -31,11 +33,11 @@ function objectToFormGroup(object: Object, validators: {}): FormGroup {
     );
 }
 
-function entityToFormEntity(entity: string | number | boolean | Object | any[], validators: {} | ValidatorFn[] | ValidatorFn) {
-    if (typeof entity === 'object') {
+function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | ValidatorFn): FormEntity {
+    if (Array.isArray(entity)) {
+        return new FormArray((entity as any[]).map(item => entityToFormEntity(item, validators)));
+    } else if (typeof entity === 'object') {
         return objectToFormGroup(entity, validators);
-    } else if (Array.isArray(entity)) {
-        return new FormArray(entityToFormEntity(entity, validators));
     } else {
         return primitiveToFormControl(entity, validators as (ValidatorFn[] | ValidatorFn));
     }

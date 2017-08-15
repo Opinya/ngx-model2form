@@ -42,7 +42,7 @@ export class AppComponent {
     ngOnInit() {
         this.people$ = new BehaviorSubject<Person>(this.persons[0])
         this.peopleForm$ = this.people$
-            .toNgForm<Person>() as Observable<FormGroup>
+            .toNgForm<Person>() as Observable<FormGroup>;
     }
 
     changePerson(personIndex) {
