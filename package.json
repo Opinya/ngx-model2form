@@ -6,7 +6,7 @@
   "types": "lib/Model2Form.d.ts",
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "tsc",
+    "build": "tsc --outDir lib --sourceMap -d src/Model2Form",
     "watch": "tsc -w --outDir lib --sourceMap -d src/Model2Form",
     "prepublishOnly": "npm-run-all build",
     "test": "echo \"Error: no test specified\" && exit 1"
