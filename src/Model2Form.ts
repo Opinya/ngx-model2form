@@ -10,8 +10,7 @@ declare module 'rxjs/Observable' {
     interface Observable<T> {
         toNgForm<T>(
             this: Observable<T>,
-            validators?: {} | ValidatorFn[] | ValidatorFn,
-            additionalControls?: any
+            validators?: {} | ValidatorFn[] | ValidatorFn
         ): Observable<FormEntity>;
     }
 }
@@ -46,8 +45,7 @@ function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | Val
 
 function toNgForm<T>(
     this: Observable<T>,
-    validators?: {} | ValidatorFn[] | ValidatorFn,
-    additionalControls?: any 
+    validators?: {} | ValidatorFn[] | ValidatorFn
 ): Observable<FormEntity> {
     return this.map((model: T) => entityToFormEntity(model, validators));
 }
