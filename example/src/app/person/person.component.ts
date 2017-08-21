@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
+import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-person',
@@ -10,10 +10,11 @@ import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
 export class PersonComponent {
   @Input() person: FormGroup;
 
-  get childrenNames(): string[] {
+  get childrenNames(): FormControl[] {
     const children = this.person.get('childrenNames') as FormArray;
-    const value = children.value;
-    return Object.keys(value).map(key => value[key]);
+    return children.controls as FormControl[];
+    // const value = children.value;
+    // return Object.keys(value).map(key => value[key]);
   }
 
 }

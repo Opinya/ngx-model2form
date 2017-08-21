@@ -9,24 +9,20 @@ export type Entity = Primitive | Object | Object[] | Primitive[];
 declare module 'rxjs/Observable' {
     interface Observable<T> {
         toNgForm<T>(
+            this: Observable<T>,
             validators?: {} | ValidatorFn[] | ValidatorFn,
-            additionalControls?: any,
-            postEditing?: (form: FormEntity) => FormEntity
+            additionalControls?: any
         ): Observable<FormEntity>;
     }
 }
 
 function primitiveToFormControl(primitive: string | number | boolean, validators: ValidatorFn[] | ValidatorFn) {
-    const control = new FormControl(primitive);
-    if (validators) {
-        control.setValidators(validators);
-    }
-    return control;
+    return new FormControl(primitive, validators);
 }
 
 function objectToFormGroup(object: Object, validators: {}): FormGroup {
     return new FormGroup(
-        Object.keys(object).reduce((group, prop: string) => {
+        Object.keys(object).reduce((group: {[key: string]: FormEntity}, prop: string) => {
             group[prop] = entityToFormEntity(object[prop], validators && validators[prop]);
             return group;
         }, {})
@@ -34,10 +30,12 @@ function objectToFormGroup(object: Object, validators: {}): FormGroup {
 }
 
 function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | ValidatorFn): FormEntity {
-    if (Array.isArray(entity)) {
-        return new FormArray((entity as any[]).map(item => entityToFormEntity(item, validators)));
-    } else if (typeof entity === 'object') {
-        return objectToFormGroup(entity, validators);
+    if (typeof entity === 'object') {
+        if (entity.hasOwnProperty('length')) {
+            return new FormArray((entity as any[]).map(item => entityToFormEntity(item, validators)));
+        } else {
+            return objectToFormGroup(entity, validators);
+        }
     } else {
         return primitiveToFormControl(entity, validators as (ValidatorFn[] | ValidatorFn));
     }
@@ -45,9 +43,8 @@ function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | Val
 
 function toNgForm<T>(
     this: Observable<T>,
-    validators?: {} | any[] | ValidatorFn,
-    additionalControls?: any,   
-    postEdit?: (form: FormEntity) => FormEntity
+    validators?: {} | ValidatorFn[] | ValidatorFn,
+    additionalControls?: any 
 ): Observable<FormEntity> {
     return this.map((model: T) => entityToFormEntity(model, validators));
 }

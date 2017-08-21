@@ -7,7 +7,7 @@ export interface Person {
     },
     gender: gender;
     height: number;
-    birthdate: Date;
+    birthdate: number;
     childrenNames: string[];
     
 }

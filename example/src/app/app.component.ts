@@ -12,7 +12,7 @@ import 'ngx-model2form';
 export class AppComponent {
     peopleForm$: Observable<FormGroup>;
     people$: BehaviorSubject<Person>;
-    private persons = [
+    private people = [
         {
             name: 'Chen Eshchar',
             address: {
@@ -22,8 +22,8 @@ export class AppComponent {
             },
             gender: 'male' as gender,
             height: 193,
-            birthdate: new Date(2017, 2, 5),
-            childrenNames: ['Hanzel', 'Grettel']
+            birthdate: 11923529499,
+            childrenNames: ['Hanzel', 'Grettel', 'Sheftel']
         },
         {
             name: 'Tom Eshchar',
@@ -34,18 +34,18 @@ export class AppComponent {
             },
             gender: 'male' as gender,
             height: 185,
-            birthdate: new Date(2015, 5, 7),
+            birthdate: 11924929499,
             childrenNames: ['Ammi', 'Tammi']
         }
     ]
     
     ngOnInit() {
-        this.people$ = new BehaviorSubject<Person>(this.persons[0])
+        this.people$ = new BehaviorSubject<Person>(this.people[0])
         this.peopleForm$ = this.people$
             .toNgForm<Person>() as Observable<FormGroup>;
     }
 
     changePerson(personIndex) {
-        this.people$.next(this.persons[personIndex]);
+        this.people$.next(this.people[personIndex]);
     }
 }
