@@ -4,7 +4,7 @@ import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/for
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
-  styleUrls: ['./person.component.css']
+  styleUrls: ['./person.component.scss']
 })
 
 export class PersonComponent {
@@ -13,8 +13,16 @@ export class PersonComponent {
   get childrenNames(): FormControl[] {
     const children = this.person.get('childrenNames') as FormArray;
     return children.controls as FormControl[];
-    // const value = children.value;
-    // return Object.keys(value).map(key => value[key]);
+  }
+
+  get hobbies(): FormControl[] {
+    const hobbies = this.person.get('hobbies') as FormArray;
+    return hobbies && hobbies.controls as FormControl[];
+  }
+
+  get addressGroupInvalid() {
+    const address = this.person.get('address') as FormGroup;
+    return address.invalid
   }
 
 }

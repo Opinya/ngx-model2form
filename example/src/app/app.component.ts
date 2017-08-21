@@ -1,13 +1,14 @@
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Person, gender } from './models/person.model';
 import 'ngx-model2form';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
     peopleForm$: Observable<FormGroup>;
@@ -23,7 +24,8 @@ export class AppComponent {
             gender: 'male' as gender,
             height: 193,
             birthdate: 11923529499,
-            childrenNames: ['Hanzel', 'Grettel', 'Sheftel']
+            childrenNames: ['Hansel', 'Gretel', 'Sheftel'],
+            hobbies: ['Programming', 'Volleyball']
         },
         {
             name: 'Tom Eshchar',
@@ -42,7 +44,17 @@ export class AppComponent {
     ngOnInit() {
         this.people$ = new BehaviorSubject<Person>(this.people[0])
         this.peopleForm$ = this.people$
-            .toNgForm<Person>() as Observable<FormGroup>;
+            .toNgForm<Person>({
+                name: Validators.required,
+                height: [Validators.min(100), Validators.max(240)],
+                address: {
+                    city: Validators.required
+                },
+                childrenNames: {
+                    "1": Validators.required
+                },
+                hobbies: [Validators.required, Validators.maxLength(11)]
+            }) as Observable<FormGroup>;
     }
 
     changePerson(personIndex) {

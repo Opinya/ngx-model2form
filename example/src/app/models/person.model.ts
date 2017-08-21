@@ -9,6 +9,7 @@ export interface Person {
     height: number;
     birthdate: number;
     childrenNames: string[];
+    hobbies?: string[];
     
 }
 

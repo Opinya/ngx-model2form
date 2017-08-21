@@ -1,6 +1,11 @@
 <div [formGroup]="person">
-  <span>Name: </span><input formControlName="name"/>
-  <div formGroupName="address">
+  <div>
+    <span>Name: </span><input formControlName="name"/>
+  </div>
+  <div>
+    <span>Height: </span><input formControlName="height"/>
+  </div>
+  <div formGroupName="address" [class.invalid]="addressGroupInvalid">
     <span>Address: </span>
     <input formControlName="houseNumber"/>
     <input formControlName="streetName"/>
@@ -12,5 +17,10 @@
        <input [formControlName]="i"/>   
     </li> 
   </ul> 
-  <!-- <pre>{{ person.value | json }}</pre> -->
+  <div *ngIf="hobbies?.length">Hobbies: </div>
+   <ul formArrayName="hobbies">
+    <li *ngFor="let hobby of hobbies; index as i"> 
+       <input [formControlName]="i"/>   
+    </li> 
+  </ul> 
 </div>
