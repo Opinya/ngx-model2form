@@ -17,11 +17,15 @@ You are ready to use the RxJS custom operator
 
 ## Usage
 
-In component ngOnInit:
+In component ngOnInit (assuming ```this.people$``` is a stream of people):
 
 ```
 this.peopleForm$ = this.people$.toNgForm();
 ```
+
+Which results with a stream of FormGroup with a structure simillar to the originated Person model.
+
+This stream can be passes through a component input to transform into the underlying FormGroup.
 
 
 ### Validators
@@ -87,7 +91,7 @@ No tests available at the moments. Working to get it done.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [releases on this repository](https://github.com/Opinya/ngx-model2form/releases). 
 
 ## Authors
 
@@ -95,5 +99,5 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Opinya/ngx-model2form/blob/master/LICENSE) file for details
 

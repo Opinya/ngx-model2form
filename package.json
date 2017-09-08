@@ -1,7 +1,7 @@
 {
   "name": "ngx-model2form",
-  "version": "0.2.2",
-  "description": "An RxJS operator to map an model entity to its equivalent Ng (>=2) FormGroup.",
+  "version": "0.2.3",
+  "description": "An RxJS operator to map an model entity to its equivalent Angular (>=2) FormGroup.",
   "main": "lib/Model2Form.js",
   "types": "lib/Model2Form.d.ts",
   "scripts": {
@@ -25,9 +25,8 @@
     "Angular",
     "RxJS",
     "Observable",
-    "Operator",
-    "NgRx",
-    "Reactive-forms"
+    "Forms",
+    "Validator"
   ],
   "author": "Chen Eshchar <chen@opinya.co.il>",
   "license": "MIT",
