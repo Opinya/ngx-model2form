@@ -1,5 +1,9 @@
 # ngx-model2form
-A RxJS operator to map a model entity to its equivalent Angular (>=2) form entity.
+A RxJS operator to map a model entity to its equivalent Angular form entity.
+
+## Breaking Change
+
+Notice the addition of a selector function for validators.
 
 ## Installing
 
@@ -13,30 +17,48 @@ And import to your main application module
 import 'ngx-model2form';
 ```
 
-You are ready to use the RxJS custom operator
+You are ready to use the RxJS custom operator.
 
 ## Usage
 
-In component ngOnInit (assuming ```this.people$``` is a stream of people):
+Assuming ```this.people$``` is a stream of people, represented by the model:
+
+```
+interface Person {
+  name: string;
+  height: number;
+  hobbies: string[];
+}
+```
+
+Chaining the operator with the stream:
 
 ```
 this.peopleForm$ = this.people$.toNgForm();
 ```
 
-Which results with a stream of FormGroup with a structure simillar to the originated Person model.
+results with a stream of FormGroup with a structure simillar to the originated Person model.
 
-This stream can be passes through a component input to transform into the underlying FormGroup.
-
+This stream can be passes through a component input to transform into the underlying FormGroup,
+and benefit of the component's change detector.
 
 ### Validators
+
+Validators are passed through a selector function. The returned value determines the validators for the form, and is given the current model as parameter.
+
+```
+this.people$.toNgForm((person: Person) => ({
+  height: person.height > 193
+}));
+```
 
 You can pass validator/s as-is (for primitives) or an object, reflecting the structure of your model.
 
 #### Primitives: 
 
 ```
-this.people$.toNgForm(Validators.required);
-this.people$.toNgForm([Validators.min(0), Validators.max(9)]);
+this.people$.toNgForm(_ => Validators.required);
+this.people$.toNgForm(_ => [Validators.min(0), Validators.max(9)]);
 ```
 
 #### Object:
@@ -54,10 +76,10 @@ interface Person {
 The opearator can be run as follows:
 
 ```
-this.people$.toNgForm({
+this.people$.toNgForm(_ => ({
   name: Validators.required,
   height: [Validators.min(0), Validators.max(9)]]
-});
+}));
 ```
 
 * Notice that the ```hobbies``` property is missing, and thus will be omitted from validation.
@@ -69,21 +91,25 @@ Array property can be passed a simple validator/s to validate every item in the 
 Validating the whole array with a validation set: 
 
 ```
-this.people$.toNgForm({
+this.people$.toNgForm(_ => ({
   hobbies: [Validators.min(0), Validators.max(9)]
-});
+}));
 ```
 
 Validating specific items:
 
 ```
-this.people$.toNgForm({
+this.people$.toNgForm(_ => ({
   hobbies: {
     "0": [Validators.min(0), Validators.max(9)],
     "3": Validators.required
   }
-});
+}));
 ```
+
+## Planned features
+* Include model properties: Only transform properties that are mentioned in the include entity into form entities. Keep other properties as they are.
+* Exclude model properties: Omit transforming properties that are mentioned in the exclude entity into form entities. Keep transforming other properties into form entities.
 
 ## Running the tests
 

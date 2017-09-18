@@ -3,9 +3,9 @@
     <span>Name: </span><input formControlName="name"/>
   </div>
   <div>
-    <span>Height: </span><input formControlName="height"/>
+    <span>Height: </span><input formControlName="height" [attr.disabled]="disabled(personValue.height > 186)"/>
   </div>
-  <div formGroupName="address" [class.invalid]="addressGroupInvalid">
+  <div *ngIf="personValue.address" formGroupName="address" [class.invalid]="addressGroupInvalid">
     <span>Address: </span>
     <input formControlName="houseNumber"/>
     <input formControlName="streetName"/>
@@ -14,7 +14,7 @@
   <div>Children: </div>
    <ul formArrayName="childrenNames">
     <li *ngFor="let childName of childrenNames; index as i"> 
-       <input [formControlName]="i"/>   
+       <input [formControlName]="i" [attr.disabled]="disabled(i === 0)"/>   
     </li> 
   </ul> 
   <div *ngIf="hobbies?.length">Hobbies: </div>

@@ -15,8 +15,8 @@ declare module 'rxjs/Observable' {
     }
 }
 
-function primitiveToFormControl(primitive: string | number | boolean, validators: ValidatorFn[] | ValidatorFn) {
-    return new FormControl(primitive, validators);
+function primitiveToFormControl(value: Primitive, validators: ValidatorFn[] | ValidatorFn) {
+    return new FormControl(value, validators);
 }
 
 function objectToFormGroup(object: Object, validators: {}): FormGroup {
@@ -28,12 +28,12 @@ function objectToFormGroup(object: Object, validators: {}): FormGroup {
     );
 }
 
-function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | ValidatorFn): FormEntity {
+export function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | ValidatorFn): FormEntity {
     if (typeof entity === 'object') {
         if (entity.hasOwnProperty('length')) {
             return new FormArray((entity as any[]).map((item, index) => entityToFormEntity(
                 item, 
-                (typeof item !== 'object') && (typeof validators === 'object') && !Array.isArray(validators) ? validators[index] : validators 
+                (typeof item !== 'object') && (typeof validators === 'object') && !Array.isArray(validators) ? validators[index] : validators
             )));
         } else {
             return objectToFormGroup(entity, validators);
@@ -45,9 +45,13 @@ function entityToFormEntity(entity: Entity, validators: {} | ValidatorFn[] | Val
 
 function toNgForm<T>(
     this: Observable<T>,
-    validators?: {} | ValidatorFn[] | ValidatorFn
+    validatorsSelector?: Function,
+    disabledSelector?: Function
 ): Observable<FormEntity> {
-    return this.map((model: T) => entityToFormEntity(model, validators));
+    return this.map((model: T) => entityToFormEntity(
+        model, 
+        validatorsSelector && validatorsSelector(model)
+    ));
 }
 
 Observable.prototype.toNgForm = toNgForm;

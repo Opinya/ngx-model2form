@@ -10,6 +10,14 @@ import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/for
 export class PersonComponent {
   @Input() person: FormGroup;
 
+  disabled(condition) {
+    return condition ? 'disabled' : undefined;
+  }
+
+  get personValue() {
+    return this.person.value;
+  }
+
   get childrenNames(): FormControl[] {
     const children = this.person.get('childrenNames') as FormArray;
     return children.controls as FormControl[];
@@ -22,7 +30,7 @@ export class PersonComponent {
 
   get addressGroupInvalid() {
     const address = this.person.get('address') as FormGroup;
-    return address.invalid
+    return address && address.invalid;
   }
 
 }
